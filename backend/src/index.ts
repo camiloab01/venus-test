@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { db } from './config/db';
+import marketRouter from './modules/market/market.route';
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ app.get('/', async (req: Request, res: Response) => {
   const response = await testDbConnection();
   res.json({ response });
 });
+
+app.use('/api/v1/markets', marketRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

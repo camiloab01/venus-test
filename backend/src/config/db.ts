@@ -1,6 +1,6 @@
-import { createPool, Pool } from 'mysql2/promise';
+import { createPool, Pool } from 'mysql2/promise'
 
-let pool: Pool;
+let pool: Pool
 export const db = (): Pool =>
   pool ??
   (pool = createPool({
@@ -10,4 +10,4 @@ export const db = (): Pool =>
     database: process.env.DB_NAME || 'app_db',
     waitForConnections: true,
     connectionLimit: 10,
-  }));
+  }))

@@ -3,12 +3,12 @@
     "target": "es2016",
     "module": "commonjs",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
+    "rootDir": "./src",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/tests/**/*"], // include tests so they compile
   "exclude": ["node_modules"]
 }

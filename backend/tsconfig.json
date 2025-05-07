@@ -9,6 +9,6 @@
     "outDir": "./dist",
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "tests/**/*"], // include tests so they compile
+  "include": ["src/**/*", "src/tests/**/*"], // include tests so they compile
   "exclude": ["node_modules"]
 }

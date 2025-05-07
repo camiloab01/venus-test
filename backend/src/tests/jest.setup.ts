@@ -1,5 +1,5 @@
 import { afterAll } from "@jest/globals";
-import { db } from "../src/config/db";
+import { db } from "../config/db";
 
 afterAll(async () => {
   try {

@@ -3,7 +3,7 @@ import { MySqlContainer, StartedMySqlContainer } from "@testcontainers/mysql"; /
 import fs from "fs/promises";
 import { createConnection } from "mysql2/promise";
 import path from "path";
-import { db } from "../../src/config/db";
+import { db } from "../../config/db";
 
 let mysql: StartedMySqlContainer;
 let app: import("express").Express;
@@ -39,7 +39,7 @@ beforeAll(async () => {
   await conn.query(sql);
   await conn.end();
 
-  ({ app } = await import("../../src/app"));
+  ({ app } = await import("../../app"));
 }, 30_000);
 
 afterAll(async () => {

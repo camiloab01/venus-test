@@ -2,9 +2,9 @@ import './App.css'
 
 function App() {
   return (
-    <div className="h-[454px] md:h-[254px] lg:h-[265px] w-[359px] sm:w-[591px] md:w-[792px] lg:w-[976px] md:bg-[#282931] bg-white/[4%] rounded-[24px]">
+    <div className="h-[454px] md:h-[265px] lg:h-[265px] w-[359px] sm:w-[591px] md:w-[792px] lg:w-[976px] md:bg-[#282931] bg-white/[4%] rounded-[24px]">
       <div className="block md:hidden h-[236px] bg-[url('/src/assets/illustration.png')] bg-[length:410px_358px] bg-no-repeat bg-[position:center_top_10px]"></div>
-      <div className="h-[218px] md:h-full flex flex-col md:items-start justify-between md:p-8 p-4 gap-2 md:bg-[url('/src/assets/illustration.png')] md:bg-[length:715px_624px] md:bg-no-repeat md:bg-cover md:bg-[position:right_-140px_top_-100px] bg-white/[4%] rounded-b-[24px] md:rounded-[24px]">
+      <div className="h-[218px] md:h-full flex flex-col md:items-start justify-between md:p-8 p-4 gap-2 md:bg-[url('/src/assets/illustration.png')] md:bg-[length:715px_624px] md:bg-no-repeat md:bg-[position:left_320px_top_-60px] lg:bg-[position:left_345px_top_-60px] bg-white/[4%] rounded-b-[24px] md:rounded-[24px]">
         <div className="flex flex-col gap-1 md:items-start items-center">
           <p className="text-lg leading-[27px] text-white font-semibold">
             Treasury balance

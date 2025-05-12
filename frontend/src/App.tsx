@@ -12,7 +12,7 @@ function App() {
   // **************** ON-CHAIN DATA ****************
   // Fetch the treasury balance of XVS token
   // using the read contract hook from wagmi
-  const { data: XVSBalance } = useReadContract({
+  const { data: XVSBalance, refetch: refetchBalance } = useReadContract({
     abi: erc20Abi,
     address: XVS_CONTRACT_ADDRESS,
     functionName: 'balanceOf',
@@ -32,6 +32,11 @@ function App() {
     },
     staleTime: 60_000,
   })
+
+  const handleRefresh = () => {
+    refetchBalance()
+    refetchTvl()
+  }
 
   return (
     <div className="h-[454px] md:h-[265px] lg:h-[265px] w-[359px] sm:w-[591px] md:w-[792px] lg:w-[976px] md:bg-[#282931] bg-white/[4%] rounded-[24px]">
@@ -63,10 +68,8 @@ function App() {
         </div>
         <button
           type="button"
-          onClick={() => {
-            refetchTvl()
-          }}
-          className="min-h-[48px] text-white bg-[#3A78FF] hover:bg-blue-600 font-semibold rounded-lg text-md focus:outline-none w-full md:w-[108px]"
+          onClick={handleRefresh}
+          className="min-h-[48px] text-white bg-[#3A78FF] hover:bg-blue-600 font-semibold rounded-lg text-md focus:outline-none w-full md:w-[108px] cursor-pointer"
         >
           Refresh
         </button>

@@ -1,6 +1,16 @@
+import { useReadContract } from 'wagmi'
+import { erc20Abi, formatUnits } from 'viem'
 import './App.css'
+import { TREASURY_ACCOUNT_ADDRESS, XVS_CONTRACT_ADDRESS } from './config'
 
 function App() {
+  const { data } = useReadContract({
+    abi: erc20Abi,
+    address: XVS_CONTRACT_ADDRESS,
+    functionName: 'balanceOf',
+    args: [TREASURY_ACCOUNT_ADDRESS],
+  })
+
   return (
     <div className="h-[454px] md:h-[265px] lg:h-[265px] w-[359px] sm:w-[591px] md:w-[792px] lg:w-[976px] md:bg-[#282931] bg-white/[4%] rounded-[24px]">
       <div className="block md:hidden h-[236px] bg-[url('/src/assets/illustration.png')] bg-[length:410px_358px] bg-no-repeat bg-[position:center_top_10px]"></div>
@@ -10,7 +20,7 @@ function App() {
             Treasury balance
           </p>
           <p className="text-[#9597A1] text-[16px] leading-[24px] font-normal">
-            1,111.111111111111111111 XVS
+            {data && formatUnits(data, 18)} XVS
           </p>
         </div>
         <div className="flex flex-col gap-1 md:items-start items-center">

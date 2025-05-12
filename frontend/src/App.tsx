@@ -9,32 +9,29 @@ import {
 import { useQuery } from '@tanstack/react-query'
 
 function App() {
-  const { data } = useReadContract({
+  // **************** ON-CHAIN DATA ****************
+  // Fetch the treasury balance of XVS token
+  // using the read contract hook from wagmi
+  const { data: XVSBalance } = useReadContract({
     abi: erc20Abi,
     address: XVS_CONTRACT_ADDRESS,
     functionName: 'balanceOf',
     args: [TREASURY_ACCOUNT_ADDRESS],
   })
 
-  const { data: tvlUsd, refetch: refetchTvl } = useQuery({
-    queryKey: ['tvl'], // cache key
+  // **************** OFF-CHAIN DATA ****************
+  // Fetch the market TVL from the API
+  // using the react-query library
+  const { data: marketTvl, refetch: refetchTvl } = useQuery({
+    queryKey: ['tvl'],
     queryFn: async () => {
       const res = await fetch(API_URL)
-      if (!res.ok) throw new Error('API error')
+      if (!res.ok) console.log('API error', res)
       const { marketTvl } = await res.json()
       return marketTvl as number
     },
-    staleTime: 60_000, // 1‑min cache
+    staleTime: 60_000,
   })
-
-  const tvlHuman =
-    tvlUsd != null
-      ? tvlUsd.toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          maximumFractionDigits: 2,
-        })
-      : '—'
 
   return (
     <div className="h-[454px] md:h-[265px] lg:h-[265px] w-[359px] sm:w-[591px] md:w-[792px] lg:w-[976px] md:bg-[#282931] bg-white/[4%] rounded-[24px]">
@@ -45,7 +42,9 @@ function App() {
             Treasury balance
           </p>
           <p className="text-[#9597A1] text-[16px] leading-[24px] font-normal">
-            {data && formatUnits(data, 18)} XVS
+            {XVSBalance
+              ? `${Number(formatUnits(XVSBalance, 18)).toFixed(4)} XVS`
+              : '—'}
           </p>
         </div>
         <div className="flex flex-col gap-1 md:items-start items-center">
@@ -53,16 +52,19 @@ function App() {
             Market size
           </p>
           <p className="text-[#9597A1] text-[16px] leading-[24px] font-normal">
-            {tvlHuman}
+            {marketTvl
+              ? marketTvl.toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                  maximumFractionDigits: 2,
+                })
+              : '—'}
           </p>
         </div>
         <button
           type="button"
           onClick={() => {
-            // refetch on‑chain and API data
             refetchTvl()
-            // wagmi: invalidate balanceOf cache
-            // (or just rely on its block polling if you enabled it)
           }}
           className="min-h-[48px] text-white bg-[#3A78FF] hover:bg-blue-600 font-semibold rounded-lg text-md focus:outline-none w-full md:w-[108px]"
         >

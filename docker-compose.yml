@@ -11,11 +11,11 @@ services:
       MYSQL_USER: app_user
       MYSQL_PASSWORD: app_password
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       timeout: 5s
       retries: 5
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - mysql_data:/var/lib/mysql
@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "8181:8181"
+      - '8181:8181'
     environment:
       NODE_ENV: development
       DB_HOST: db
@@ -48,23 +48,22 @@ services:
       - tech-test-network
 
   frontend:
-    build:
-      context: ./frontend
+    build: ./frontend
     container_name: frontend_tech_test
-    command: yarn dev
-    restart: always
     depends_on:
       - backend
+    command: sh -c "yarn install --non-interactive && yarn dev --host"
     ports:
-      - "5173:5173"
+      - '5173:5173'
     volumes:
       - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
+      - node_modules_fe:/usr/src/app/node_modules
     networks:
       - tech-test-network
 
 volumes:
   mysql_data:
+  node_modules_fe: {}
 
 networks:
   tech-test-network:

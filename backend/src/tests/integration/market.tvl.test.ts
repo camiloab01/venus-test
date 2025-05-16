@@ -1,5 +1,5 @@
 import request from "supertest";
-import { MySqlContainer, StartedMySqlContainer } from "@testcontainers/mysql"; // yarn add -D @testcontainers/mysql
+import { MySqlContainer, StartedMySqlContainer } from "@testcontainers/mysql";
 import fs from "fs/promises";
 import { createConnection } from "mysql2/promise";
 import path from "path";
